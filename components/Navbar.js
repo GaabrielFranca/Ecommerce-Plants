@@ -30,7 +30,7 @@ const NavBar = () => {
     <>
       <nav className="bg-white flex justify-between  items-center m-auto  max-w-screen-lg px-4 lg:px-0">
         <div className="cursor-pointer mt-1 " onClick={() => router.push("/")}>
-          <Image src={Logo} alt="Logo" sizes="h-83 w-133" priority={true} />
+          <Image src={Logo} alt="Logo" sizes="h-83 w-133" as="image" />
         </div>
         {menuMobile && (
           <>
@@ -49,7 +49,9 @@ const NavBar = () => {
                 <div className="absolute top-7 left-4 ">
                   <div className="flex space-x-1 items-center mt-0.5">
                     <UserCircleIcon className="h-8 w-8 " />
-                    <p className="text-base m-0 ">Gabriel</p>
+                    <p className="font-subtitle text-base m-0 text-gray-500">
+                      Gabriel
+                    </p>
                   </div>
                 </div>
               </div>
@@ -57,7 +59,7 @@ const NavBar = () => {
                 onClick={() => {
                   setMenuMobile(false);
                 }}
-                className="mt-24 ml-6 space-y-6 flex flex-col text-base "
+                className="mt-24 ml-6 space-y-6 flex flex-col text-base font-subTitle text-gray-500"
               >
                 <Link href="/produtos"> Produtos</Link>
                 <Link href="/sobre"> Sobre nós</Link>
@@ -70,7 +72,7 @@ const NavBar = () => {
         )}
         {!menuMobile && (
           <>
-            <div className="hidden md:block space-x-10 text-base ">
+            <div className="hidden md:block space-x-10 text-base font-subTitle text-gray-500">
               <Link href="/produtos"> Produtos</Link>
               <Link href="/sobre"> Sobre nós</Link>
               <Link href="/contato">Entre em contato</Link>
@@ -79,7 +81,9 @@ const NavBar = () => {
             <div className="flex space-x-5 ">
               <div className="hidden md:flex space-x-1 items-center mt-0.5">
                 <UserCircleIcon className="h-8 w-8 text-color-custom-green" />
-                <p className="text-base m-0 ">Gabriel</p>
+                <p className="text-base m-0 font-subTitle text-gray-500">
+                  Gabriel
+                </p>
               </div>
               <div
                 onClick={() => {
@@ -89,7 +93,9 @@ const NavBar = () => {
               >
                 <ShoppingBagIcon className=" h-8 w-8 text-color-custom-green" />
                 <div className="absolute bg-color-custom-gray rounded-full h-4 w-4 bottom-0 right-0 top-1.5">
-                  <p className="-mt-1 ml-1 ">2</p>
+                  <p className="-mt-1 ml-1 font-text text-color-custom-white">
+                    2
+                  </p>
                 </div>
               </div>
 

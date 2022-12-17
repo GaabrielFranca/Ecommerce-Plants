@@ -5,16 +5,16 @@ import NavBar from "./Navbar";
 
 const Layout = ({ children }) => {
   return (
-    <div>
+    <div className="">
       <Head>
         <title>Chris Plants</title>
       </Head>
 
-      <header className="fixed top-0 z-50 w-full bg-white">
+      <header className=" fixed top-0 z-50 w-full bg-white">
         <NavBar />
       </header>
-      <main className="pt-[110px]">{children}</main>
-      <footer>
+      <main className=" pt-[110px]">{children}</main>
+      <footer className="">
         <Footer />
       </footer>
     </div>

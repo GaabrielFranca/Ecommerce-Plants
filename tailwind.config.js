@@ -14,9 +14,9 @@ module.exports = {
         "color-custom-white": "#D9D9D9",
       },
       fontFamily: {
-        "font-title": ["Antic", "sans-serif"],
-        "font-subtitle": ["Mukta", "sans-serif"],
-        "font-text": ["Antic", "sans-serif"],
+        title: ["Antic", "sans-serif"],
+        subTitle: ["Mukta", "sans-serif"],
+        text: ["Raleway", "sans-serif"],
       },
     },
   },
