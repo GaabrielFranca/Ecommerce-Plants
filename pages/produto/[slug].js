@@ -2,7 +2,8 @@ import React from "react";
 import BtnCustom from "../../components/BtnCustom.js";
 import Image from "next/image";
 import { client, urlFor } from "../../lib/client.js";
-const product = (image) => {
+const product = ({ product: { details, image, name, price, slug } }) => {
+  console.log(image);
   return (
     <div className=" flex flex-col m-auto max-w-screen-lg px-4 py-8  md:space-x-8 md:flex-row lg:px-0 mt-4">
       <div className="flex flex-row md:mx-8  md:flex-col md:space-y-4">
@@ -11,53 +12,62 @@ const product = (image) => {
             fill
             sizes="w-94 h-64"
             priority={true}
-            src={"/images/product.png"}
-            alt="Minha imagem"
+            src={urlFor(image[0].asset).url()}
+            alt={name}
           />
         </div>
         <div className="flex flex-1 ml-4 md:ml-0  flex-col gap-4  md:flex-row">
-          <div className="relative w-24 h-full sm:w-full md:w-full max-w-[200px] md:h-24">
-            <Image
-              as="image"
-              fill
-              sizes="w-1/3 h-1/3"
-              priority={false}
-              src={"/images/product.png"}
-              alt="Minha imagem"
-            />
-          </div>
-          <div className="relative w-24 h-full sm:w-full md:w-full max-w-[200px] md:h-24">
-            <Image
-              as="image"
-              fill
-              sizes="w-1/3 h-1/3"
-              priority={false}
-              src={"/images/product.png"}
-              alt="Minha imagem"
-            />
-          </div>
-          <div className="relative w-24 h-full sm:w-full  md:w-full max-w-[200px] md:h-24">
-            <Image
-              as="image"
-              fill
-              sizes="w-1/3 h-1/3"
-              priority={false}
-              src={"/images/product.png"}
-              alt="Minha imagem"
-            />
-          </div>
+          {image[0].asset ? (
+            <div className="relative w-24 h-full sm:w-full md:w-full max-w-[200px] md:h-24">
+              <Image
+                as="image"
+                fill
+                sizes="w-1/3 h-1/3"
+                priority={false}
+                src={urlFor(image[0].asset).url()}
+                alt="Minha imagem"
+              />
+            </div>
+          ) : (
+            <div className="bg-gray-300  w-24 h-full sm:w-full md:w-full max-w-[200px] md:h-24"></div>
+          )}
+          {image[1] ? (
+            <div className="relative w-24 h-full sm:w-full md:w-full max-w-[200px] md:h-24">
+              <Image
+                as="image"
+                fill
+                sizes="w-1/3 h-1/3"
+                priority={false}
+                src={urlFor(image[1].asset).url()}
+                alt="Minha imagem"
+              />
+            </div>
+          ) : (
+            <div className="bg-gray-300  w-24 h-full sm:w-full md:w-full max-w-[200px] md:h-24"></div>
+          )}
+          {image[2] ? (
+            <div className="relative w-24 h-full sm:w-full md:w-full max-w-[200px] md:h-24">
+              <Image
+                as="image"
+                fill
+                sizes="w-1/3 h-1/3"
+                priority={false}
+                src={urlFor(image[2].asset).url()}
+                alt="Minha imagem"
+              />
+            </div>
+          ) : (
+            <div className="bg-gray-300  w-24 h-full sm:w-full md:w-full max-w-[200px] md:h-24"></div>
+          )}
         </div>
       </div>
       {/* details */}
       <div className=" border-gray-300 border-b-2">
         <h2 className="mt-4 md:mt-0 font-title mb-2 text-2xl md:text-4xl text-color-custom-black">
-          Zamioculcaa
+          {name}
         </h2>
         <span className="text-sm md:text-base text-left font-text text-color-custom-gray">
-          A zamioculca é uma planta originária da Tanzânia, na África. Por ser
-          uma planta de menor porte costumam não passar muito de 1 metro de
-          altura em seu ambiente natural, a planta costuma ficar debaixo da copa
-          das árvores, o que significa que ela não gosta de sol direto.
+          {details}
         </span>
         <div className="font-subTitle flex  flex-row items-center pt-4">
           <div className=" flex  flex-grow ">
@@ -74,7 +84,7 @@ const product = (image) => {
             </div>
           </div>
           <div className="text-left sm:text-end">
-            <p className="text-base">R$150,00</p>
+            <p className="text-base">R${price},00</p>
           </div>
         </div>
         <div className="flex  space-x-2">
@@ -97,34 +107,34 @@ const product = (image) => {
   );
 };
 
-// export const getStaticPaths = async () => {
-//   const query = `*[_type == "product"] {
-//     slug {
-//       current
-//     }
-//   }
-//   `;
+export const getStaticPaths = async () => {
+  const query = `*[_type == "product"] {
+     slug {
+       current
+     }
+   }
+   `;
 
-//   const products = await client.fetch(query);
+  const products = await client.fetch(query);
 
-//   const paths = products.map((product) => ({
-//     params: {
-//       slug: product.slug.current,
-//     },
-//   }));
+  const paths = products.map((product) => ({
+    params: {
+      slug: product.slug.current,
+    },
+  }));
 
-//   return {
-//     paths,
-//     fallback: "blocking",
-//   };
-// };
+  return {
+    paths,
+    fallback: "blocking",
+  };
+};
 
-// export const getStaticProps = async ({ params: { slug } }) => {
-//   const query = `*[_type == "product" && slug.current == '${slug}'][0]`;
-//   const product = await client.fetch(query);
+export const getStaticProps = async ({ params: { slug } }) => {
+  const query = `*[_type == "product" && slug.current == '${slug}'][0]`;
+  const product = await client.fetch(query);
 
-//   return {
-//     props: { product },
-//   };
-// };
+  return {
+    props: { product },
+  };
+};
 export default product;

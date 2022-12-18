@@ -16,13 +16,13 @@ function index({ product }) {
     </div>
   );
 }
-// export async function getServerSideProps() {
-//   const product = await client.fetch(`*[_type == "product"]`);
-//   return {
-//     props: {
-//       product,
-//     },
-//   };
-// }
+export async function getServerSideProps() {
+  const product = await client.fetch(`*[_type == "product"]`);
+  return {
+    props: {
+      product,
+    },
+  };
+}
 
 export default index;
