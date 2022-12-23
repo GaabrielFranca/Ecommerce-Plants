@@ -3,7 +3,6 @@ import BtnCustom from "../../components/BtnCustom.js";
 import Image from "next/image";
 import { client, urlFor } from "../../lib/client.js";
 const product = ({ product: { details, image, name, price, slug } }) => {
-  console.log(image);
   return (
     <div className=" flex flex-col m-auto max-w-screen-lg px-4 py-8  md:space-x-8 md:flex-row lg:px-0 mt-4">
       <div className="flex flex-row md:mx-8  md:flex-col md:space-y-4">

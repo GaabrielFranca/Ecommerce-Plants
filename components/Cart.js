@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { TrashIcon } from "@heroicons/react/24/solid";
 import BtnCustom from "./BtnCustom";
+import { useStateContext } from "../context/useContext";
 export default function Cart({ cartRef }) {
+  const { cart } = useStateContext();
   // criar uma funcao para verificar a screem da tela
   const [checkMobal, setCheckMobal] = useState(null);
 
@@ -67,11 +69,11 @@ export default function Cart({ cartRef }) {
               </div>
             </div>
           </div>
-          <div className="flex flex-col text-custom-color-gray font-text text-base">
-            {/* <div className="flex">
+          <div className="flex flex-col text-custom-color-gray font-subtitle mt-2 text-base">
+            <div className="flex items-center ">
               <h3 className="flex-grow ">preço total: 3</h3>
               <h3 className="flex-grow text-end">items total: 3</h3>
-            </div> */}
+            </div>
             <div className="m-auto">
               <BtnCustom title="Finalizar pedido"></BtnCustom>
             </div>
