@@ -4,7 +4,8 @@ import { TrashIcon } from "@heroicons/react/24/solid";
 import BtnCustom from "./BtnCustom";
 import { useStateContext } from "../context/useContext";
 export default function Cart({ cartRef }) {
-  const { cart } = useStateContext();
+  const { cartItems, totalQty, qty, totalPrice, IncrementQty, DecrementQty } =
+    useStateContext();
   // criar uma funcao para verificar a screem da tela
   const [checkMobal, setCheckMobal] = useState(null);
 
@@ -51,13 +52,19 @@ export default function Cart({ cartRef }) {
                 <div className="font-subTitle flex mt-2">
                   <div className=" flex  flex-grow ">
                     <div className="flex items-center justify-center space-x-1">
-                      <button className="bg-gray-200 hover:bg-gray-300 text-black font-bold py-1 px-3 ">
+                      <button
+                        onClick={IncrementQty}
+                        className="bg-gray-200 hover:bg-gray-300 text-black font-bold py-1 px-3 "
+                      >
                         +
                       </button>
                       <div className="bg-gray-200 hover:bg-gray-300 text-black font-bold py-1 px-3 text-base">
-                        {0}
+                        {qty}
                       </div>
-                      <button className="bg-gray-200 hover:bg-gray-300 text-black font-bold py-1 px-3">
+                      <button
+                        onClick={DecrementQty}
+                        className="bg-gray-200 hover:bg-gray-300 text-black font-bold py-1 px-3"
+                      >
                         -
                       </button>
                     </div>
