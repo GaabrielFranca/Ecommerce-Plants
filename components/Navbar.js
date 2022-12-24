@@ -14,6 +14,7 @@ import instagram from "../public/images/IconInstagram.svg";
 import facebook from "../public/images/IconFacebook.svg";
 import Cart from "./Cart.js";
 import useOutside from "../Hooks/useOutside";
+import { useStateContext } from "../context/useContext";
 const NavBar = () => {
   const router = useRouter();
   const [menuMobile, setMenuMobile] = React.useState(false);
@@ -25,7 +26,7 @@ const NavBar = () => {
   };
   useOutside(menuRef, setMenuMobile);
   useOutside(cartRef, setCartOpen);
-
+  const { totalQty } = useStateContext();
   return (
     <>
       <nav className="bg-white flex justify-between  items-center m-auto  max-w-screen-lg px-4 lg:px-0">
@@ -94,7 +95,7 @@ const NavBar = () => {
                 <ShoppingBagIcon className=" h-8 w-8 text-color-custom-green" />
                 <div className="absolute bg-color-custom-gray rounded-full h-4 w-4 bottom-0 right-0 top-1.5">
                   <p className="-mt-1 ml-1 font-text text-color-custom-white">
-                    2
+                    {totalQty}
                   </p>
                 </div>
               </div>

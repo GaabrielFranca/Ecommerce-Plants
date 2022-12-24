@@ -3,7 +3,6 @@ import Banner from "../components/Banner.js";
 import ProductsRow from "../components/ProductsRow.js";
 import BtnCustom from "../components/BtnCustom.js";
 import { client } from "../lib/client.js";
-
 function index({ product }) {
   return (
     <div>
