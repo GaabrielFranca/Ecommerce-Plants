@@ -8,6 +8,7 @@ export default function Cart({ cartRef }) {
   const {
     cartItems,
     toggleQty,
+    onRemove,
     qty,
     totalPrice,
     IncrementQty,
@@ -57,7 +58,10 @@ export default function Cart({ cartRef }) {
                         : truncateString(`${item.details}`, 61)}
                     </p>
                   </div>
-                  <TrashIcon className="absolute top-12  right-0   w-4 h-4 text-color-custom-green" />
+                  <TrashIcon
+                    onClick={() => onRemove(item)}
+                    className="absolute top-12  right-0   w-4 h-4 text-color-custom-green cursor-pointer"
+                  />
                   <div className="font-subTitle flex mt-2">
                     <div className=" flex  flex-grow ">
                       <div className="flex items-center justify-center space-x-1">

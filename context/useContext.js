@@ -12,6 +12,7 @@ export const ContextStorage = ({ children }) => {
 
   const IncrementQty = () => setQty((prev) => prev + 1);
   const DecrementQty = () => (qty <= 1 ? 1 : setQty((prev) => prev - 1));
+
   const toggleQty = (id, value) => {
     foundProduct = cartItems.find((item) => item._id === id);
     indexProduct = cartItems.findIndex((product) => product._id === id);
@@ -21,6 +22,7 @@ export const ContextStorage = ({ children }) => {
         ...newCarItems,
         { ...foundProduct, qty: foundProduct.qty + 1 },
       ]);
+
       setTotalPrice((prev) => prev + foundProduct.price);
       setTotaltotalQty((prev) => prev + 1);
     } else if (value === "Decrement") {
@@ -34,6 +36,17 @@ export const ContextStorage = ({ children }) => {
       }
     }
   };
+  const onRemove = (product) => {
+    const foundProduct = cartItems.find((item) => product._id === item._id);
+    const newCarItems = cartItems.filter((item) => product._id !== item._id);
+
+    setTotalPrice(
+      (prevTotalPrice) => prevTotalPrice - foundProduct.price * foundProduct.qty
+    );
+    setTotaltotalQty((prev) => prev - foundProduct.qty);
+    setCartItems(newCarItems);
+  };
+
   const onAdd = (product, qty) => {
     // verificar se o produto ja existe no carrinho
     const CheckTwinsProducts = cartItems.find(
@@ -45,7 +58,6 @@ export const ContextStorage = ({ children }) => {
     if (CheckTwinsProducts) {
       const UpdatedCart = cartItems.map((cartProduct) => {
         if (cartProduct._id === product._id);
-        console.log(cartItems);
         return {
           ...cartProduct,
           qty: cartProduct.qty + qty,
@@ -74,6 +86,7 @@ export const ContextStorage = ({ children }) => {
         IncrementQty,
         DecrementQty,
         onAdd,
+        onRemove,
         toggleQty,
       }}
     >
