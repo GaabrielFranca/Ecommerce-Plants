@@ -5,8 +5,15 @@ import BtnCustom from "./BtnCustom";
 import { useStateContext } from "../context/useContext";
 import { urlFor } from "../lib/client";
 export default function Cart({ cartRef }) {
-  const { cartItems, totalQty, qty, totalPrice, IncrementQty, DecrementQty } =
-    useStateContext();
+  const {
+    cartItems,
+    toggleQty,
+    qty,
+    totalPrice,
+    IncrementQty,
+    totalQty,
+    DecrementQty,
+  } = useStateContext();
   // criar uma funcao para verificar a screem da tela
   const [checkMobal, setCheckMobal] = useState(null);
 
@@ -24,14 +31,18 @@ export default function Cart({ cartRef }) {
             {cartItems.map((item, index) => (
               <div key={item._id} className="flex">
                 <div className="w-28 h-28 relative ">
-                  <Image
-                    as="image"
-                    priority={false}
-                    sizes="h-28 w-28"
-                    alt="logo"
-                    src={urlFor(item.image[0].asset).url()}
-                    fill
-                  />
+                  {item.image[0] ? (
+                    <Image
+                      as="image"
+                      priority={false}
+                      sizes="h-28 w-28"
+                      alt="logo"
+                      src={urlFor(item.image[0].asset).url()}
+                      fill
+                    />
+                  ) : (
+                    <div className="bg-gray-300"></div>
+                  )}
                 </div>
                 <div className="pl-2 sm:pl-8 relative pb-4 border-top">
                   <div className=":w-[270px]">
@@ -51,16 +62,16 @@ export default function Cart({ cartRef }) {
                     <div className=" flex  flex-grow ">
                       <div className="flex items-center justify-center space-x-1">
                         <button
-                          onClick={IncrementQty}
+                          onClick={() => toggleQty(item._id, "Increment")}
                           className="bg-gray-200 hover:bg-gray-300 text-black font-bold py-1 px-3 "
                         >
                           +
                         </button>
                         <div className="bg-gray-200 hover:bg-gray-300 text-black font-bold py-1 px-3 text-base">
-                          {qty}
+                          {item.qty}
                         </div>
                         <button
-                          onClick={DecrementQty}
+                          onClick={() => toggleQty(item._id, "Decrement")}
                           className="bg-gray-200 hover:bg-gray-300 text-black font-bold py-1 px-3"
                         >
                           -

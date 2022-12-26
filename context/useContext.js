@@ -8,32 +8,55 @@ export const ContextStorage = ({ children }) => {
   const [totalQty, setTotaltotalQty] = useState(0);
   const [qty, setQty] = useState(1);
   const [totalPrice, setTotalPrice] = useState(0);
+  let foundProduct, indexProduct;
 
   const IncrementQty = () => setQty((prev) => prev + 1);
   const DecrementQty = () => (qty <= 1 ? 1 : setQty((prev) => prev - 1));
-
+  const toggleQty = (id, value) => {
+    foundProduct = cartItems.find((item) => item._id === id);
+    indexProduct = cartItems.findIndex((product) => product._id === id);
+    const newCarItems = cartItems.filter((i) => i._id !== id);
+    if (value === "Increment") {
+      setCartItems([
+        ...newCarItems,
+        { ...foundProduct, qty: foundProduct.qty + 1 },
+      ]);
+      setTotalPrice((prev) => prev + foundProduct.price);
+      setTotaltotalQty((prev) => prev + 1);
+    } else if (value === "Decrement") {
+      if (foundProduct.qty > 1) {
+        setCartItems([
+          ...newCarItems,
+          { ...foundProduct, qty: foundProduct.qty - 1 },
+        ]);
+        setTotalPrice((prev) => prev - foundProduct.price);
+        setTotaltotalQty((prev) => prev - 1);
+      }
+    }
+  };
   const onAdd = (product, qty) => {
+    // verificar se o produto ja existe no carrinho
     const CheckTwinsProducts = cartItems.find(
       (item) => item._id === product._id
-    ); // verificar se o produto ja existe no carrinho
+    );
     setTotalPrice((prev) => prev + product.price * qty);
     setTotaltotalQty((prev) => prev + qty);
 
     if (CheckTwinsProducts) {
       const UpdatedCart = cartItems.map((cartProduct) => {
-        if (cartProduct._id === product._id)
-          return {
-            ...cartProduct,
-            qty: cartProduct.qty + qty,
-          };
+        if (cartProduct._id === product._id);
+        console.log(cartItems);
+        return {
+          ...cartProduct,
+          qty: cartProduct.qty + qty,
+        };
       });
       setCartItems(UpdatedCart);
     } else {
-      const newArray = [...cartItems, product];
+      product.qty = qty;
+      const newArray = [...cartItems, { ...product }];
       setCartItems(newArray);
     }
-
-    ("Cactu adicionado 2x novos items no carrinho");
     if (qty === 1) {
       toast.success(`${product.name} ${qty}x novo item no carrinho`);
     } else {
@@ -51,6 +74,7 @@ export const ContextStorage = ({ children }) => {
         IncrementQty,
         DecrementQty,
         onAdd,
+        toggleQty,
       }}
     >
       {children}
