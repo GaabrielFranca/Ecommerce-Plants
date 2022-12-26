@@ -4,6 +4,9 @@ import { TrashIcon } from "@heroicons/react/24/solid";
 import BtnCustom from "./BtnCustom";
 import { useStateContext } from "../context/useContext";
 import { urlFor } from "../lib/client";
+import getStripe from "../lib/getStripe";
+import { toast } from "react-toastify";
+
 export default function Cart({ cartRef }) {
   const {
     cartItems,
@@ -20,6 +23,25 @@ export default function Cart({ cartRef }) {
 
   const truncateString = (string, count) =>
     string.length > count ? string.substr(0, count - 1) + "..." : string;
+  const handlePayment = async () => {
+    const stripe = await getStripe();
+
+    const response = await fetch("/api/stripe", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(cartItems),
+    });
+
+    if (response.statusCode === 500) return;
+
+    const data = await response.json();
+
+    toast.loading("Redirecionando...");
+
+    stripe.redirectToCheckout({ sessionId: data.id });
+  };
 
   return (
     <>
@@ -93,7 +115,7 @@ export default function Cart({ cartRef }) {
             ) : (
               <div className="flex justify-center items-center h-[100%]">
                 <h2 className="text-subtitle text-lg text-color-custom-gray">
-                  Carrinho Vazio
+                  Carrinho vazio.
                 </h2>
               </div>
             )}
@@ -105,7 +127,10 @@ export default function Cart({ cartRef }) {
                 <h3 className="flex-grow text-end">total items:{totalQty}</h3>
               </div>
               <div className="m-auto">
-                <BtnCustom title="Finalizar pedido"></BtnCustom>
+                <BtnCustom
+                  onclick={handlePayment}
+                  title="Finalizar pedido"
+                ></BtnCustom>
               </div>
             </div>
           )}

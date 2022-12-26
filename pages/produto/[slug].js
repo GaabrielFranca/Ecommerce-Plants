@@ -54,7 +54,7 @@ const product = ({ productItems }) => {
                 sizes="w-1/3 h-1/3"
                 priority={false}
                 src={urlFor(productItems.image[2].asset).url()}
-                alt="Minha imagem"
+                alt={productItems.name}
               />
             </div>
           ) : (
